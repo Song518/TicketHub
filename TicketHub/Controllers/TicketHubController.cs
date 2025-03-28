@@ -29,7 +29,7 @@ namespace TicketHub.Controllers
         {
             if (ModelState.IsValid == false) 
             {
-                BadRequest(ModelState);
+                return BadRequest(ModelState);
             }
 
             string queueName = "tickethub";
@@ -38,10 +38,11 @@ namespace TicketHub.Controllers
             {
                 return BadRequest("An error was encountered");
             }
+
             QueueClient queueClient = new QueueClient(connectionString, queueName);
 
             // serialize an object to json
-            string message = "";
+            string message = JsonSerializer.Serialize(customer);
 
             // send string message to queue
             await queueClient.SendMessageAsync(message);
