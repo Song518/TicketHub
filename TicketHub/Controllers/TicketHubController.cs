@@ -46,7 +46,7 @@ namespace TicketHub.Controllers
 
             // send string message to queue
             await queueClient.SendMessageAsync(message);
-            return Ok();
+            return Ok(message);
         }
     }
 }
