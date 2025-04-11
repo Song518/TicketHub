@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buy Tickets - Coldplay Tour</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f2f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    form {
+      background: #ffffff;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 24px;
+      text-align: center;
+      font-size: 24px;
+      color: #333;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #4a90e2;
+      box-shadow: 0 0 4px rgba(74, 144, 226, 0.3);
+    }
+
+    button {
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #357ABD;
+    }
+  </style>
+</head>
+<body>
+  <form id="ticketForm">
+    <h2>Buy Tickets for Coldplay World Tour</h2>
+    <input type="text" id="customerName" placeholder="Your Name" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="number" id="numberOfTickets" placeholder="Number of Tickets" required min="1" />
+    <select id="seatType" required>
+      <option value="" disabled selected>Select Seat Type</option>
+      <option value="General">General</option>
+      <option value="VIP">VIP</option>
+    </select>
+    <select id="paymentMethod" required>
+      <option value="" disabled selected>Select Payment Method</option>
+      <option value="Credit Card">Credit Card</option>
+      <option value="PayPal">PayPal</option>
+    </select>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    document.getElementById('ticketForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        CustomerName: document.getElementById('customerName').value,
+        Email: document.getElementById('email').value,
+        ConcertName: "Coldplay World Tour",
+        NumberOfTickets: parseInt(document.getElementById('numberOfTickets').value),
+        PurchaseDate: new Date().toISOString(),
+        SeatType: document.getElementById('seatType').value,
+        PaymentMethod: document.getElementById('paymentMethod').value
+      };
+
+      await fetch("https://<your-api-endpoint>/api/purchase", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      alert("Your ticket purchase has been submitted!");
+    });
+  </script>
+</body>
+</html>
